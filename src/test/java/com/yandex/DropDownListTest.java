@@ -2,41 +2,22 @@ package com.yandex;
 
 
 import com.google.common.collect.ImmutableList;
-import com.yandex.utils.ImportantQuestionBlock;
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
+import src.main.ImportantQuestionPageObject;
 
 import java.util.List;
 
-public class DropDownListTest {
-    private WebDriver driver;
+public class DropDownListTest extends BaseTest {
 
     @Test
     public void testDropDownList() {
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
-        driver = new ChromeDriver(options);
-
         driver.get("https://qa-scooter.praktikum-services.ru/");
 
-        ImportantQuestionBlock importantQuestionBlock = new ImportantQuestionBlock(driver, getExpectedAccordionsText());
+        ImportantQuestionPageObject importantQuestionPageObject = new ImportantQuestionPageObject(driver, getExpectedAccordionsText());
 
-        importantQuestionBlock.checkImportantQuestionsText();
-    }
+        importantQuestionPageObject.init(driver);
 
-    @Before
-    public void startUp() {
-        WebDriverManager.chromedriver().setup();
-    }
-
-    @After
-    public void tearDown() {
-        driver.quit();
+        importantQuestionPageObject.checkImportantQuestionsText();
     }
 
     private List<String> getExpectedAccordionsText() {
